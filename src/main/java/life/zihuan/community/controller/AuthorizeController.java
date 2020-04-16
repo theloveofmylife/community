@@ -37,10 +37,10 @@ public class AuthorizeController {
         if (user !=null){
             //登录成功,写cookie和session
             request.getSession().setAttribute("user",user);
-            return "redirect:/";
+            return "redirect:index";
         }else {
             //登陆失败
-            return "redirect:/";
+            return "redirect:index";
         }
     }
 }
