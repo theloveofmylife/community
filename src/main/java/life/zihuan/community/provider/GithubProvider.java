@@ -6,7 +6,7 @@ import life.zihuan.community.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
+
 import java.io.IOException;
 
 @Component
