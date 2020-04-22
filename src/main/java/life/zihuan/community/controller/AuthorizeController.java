@@ -1,11 +1,11 @@
 package life.zihuan.community.controller;
 
-import jdk.nashorn.internal.parser.Token;
 import life.zihuan.community.dto.AccessTokenDTO;
 import life.zihuan.community.dto.GithubUser;
 import life.zihuan.community.mapper.UserMapper;
 import life.zihuan.community.model.User;
 import life.zihuan.community.provider.GithubProvider;
+import life.zihuan.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,8 @@ public class AuthorizeController {
     private String clientUri;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserService userService;
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state,
                            HttpServletRequest request, HttpServletResponse response){
@@ -44,19 +46,23 @@ public class AuthorizeController {
         System.out.println(githubUser.getName());
         if (githubUser !=null){
             User user = new User();
-            user.setName(githubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
             user.setAccountId(String.valueOf((githubUser.getId())));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            user.setAvatarUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            user = userService.insertOrUpdate(user,githubUser);
             System.out.println(user.getToken());
             response.addCookie(new Cookie("Token", user.getToken()));
+            request.getSession().setAttribute("user",user);
             return "redirect:index";
         }else {
             //登陆失败
             return "redirect:index";
         }
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("Token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:index";
     }
 }

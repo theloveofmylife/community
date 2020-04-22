@@ -12,6 +12,10 @@
 [OKHttp](https://square.github.io/okhttp/)
 
 [flyway](https://flywaydb.org/getstarted/firststeps/maven)
+
+[lombok](https://www.projectlombok.org)
+
+[Spring MVC 文档](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#spring-web)
 ## 脚本
 ```sql
 create table USER
@@ -27,3 +31,6 @@ create table USER
   );
 ```
 邮箱：605616892@qq.com
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```

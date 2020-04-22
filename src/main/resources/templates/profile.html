@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>资环社区</title>
+    <title th:text="${sectionName}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- 必需的 Jquery 文件 -->
     <script src="/jquery/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="css/community.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
 </head>
 <body style="color: #9acfea;background-color: #efefef">
 <div th:insert="~{navigation::nav}"></div>
@@ -23,18 +23,18 @@
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;&nbsp;推&nbsp;&nbsp;荐
                 <hr>
             </h2>
-            <div class="media" th:each="question : ${paginationDTO.questionDTOList}" th:if="${paginationDTO.questionDTOList != null}">
+            <div class="media" th:each="question : ${paginationDTO.questionDTOList}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded general" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
-                    <strong>
-                        <h3 class="media-heading">
-                            <a th:href="@{'question/'+${question.id}}" th:text="${question.title}"></a>
-                        </h3>
-                    </strong>
+                    <a href="/publish">
+                        <strong>
+                            <h3 class="media-heading" th:text="${question.title}"></h3>
+                        </strong>
+                    </a>
                     <span class="text-desc" style="font-size:17px">
                         <span th:text="${question.commentCount}"></span>个回复 •
                         <span th:text="${question.viewCount}"></span>次浏览 •
@@ -46,37 +46,43 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${paginationDTO.showFirstPage == true}">
-                        <a th:text="首页" th:href="@{/(page=${1})}">
+                        <a th:text="首页" th:href="@{'/profile/'+${section}(page=${1})}">
                         </a>
                     </li>
                     <li th:if="${paginationDTO.showPrevious == true}">
-                        <a th:text="上一页" th:href="@{/(page=${paginationDTO.page-1})}">
+                        <a th:text="上一页" th:href="@{'/profile/'+${section}(page=${paginationDTO.page-1})}">
                         </a>
                     </li>
                     <li th:each="page : ${paginationDTO.pages}" th:class="${paginationDTO.page == page}? 'active':' '">
-                        <a th:text="${page}" th:href="@{/(page=${page})}">
+                        <a th:text="${page}" th:href="@{'/profile/'+${section}(page=${page})}">
                         </a>
                     </li>
                     <li th:if="${paginationDTO.showNext == true}">
-                        <a th:text="下一页" th:href="@{/(page=${paginationDTO.page+1})}">
+                        <a th:text="下一页" th:href="@{'/profile/'+${section}(page=${paginationDTO.page+1})}">
                         </a>
                     </li>
                     <li th:if="${paginationDTO.showEndPage == true}">
-                        <a th:text="尾页" th:href="@{/(page=${paginationDTO.totalPage})}">
+                        <a th:text="尾页" th:href="@{'/profile/'+${section}(page=${paginationDTO.totalPage})}">
                         </a>
                     </li>
                 </ul>
             </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h2>问题发起指南<br></h2>
-            <br>
-            <h3>• 问题标题: 请用精简的语言描述您发布的问题，不超过25字<br>
-                • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
-                • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br></h3>
+            <div class="list-group">
+                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions'}? 'active list-group-item':'list-group-item'">
+                    我的问题
+                </a>
+                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies'}? 'active list-group-item':'list-group-item'">
+                    最新回复
+                    <span class="badge">14</span>
+                </a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
         </div>
     </div>
 </div>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,3 +1,20 @@
 .main{
     margin: 30px;
 }
+.media-object{
+    width: 42px;
+    height: 42px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.general{
+    height: 40px;
+    width: 40px;
+}
+.navigation{
+    height: 26px;
+    width: 26px;
+}

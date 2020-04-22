@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>资环社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- 必需的 Jquery 文件 -->
+    <script src="/jquery/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/css/community.css"/>
+</head>
+<body style="background-color: #efefef">
+<div th:insert="~{navigation::nav}"></div>
+
+<div class="container-fluid main" style="background-color: white">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <strong><h2>
+                <span class="glyphicon glyphicon-book" aria-hidden="true" th:text="'  ' + ${question.title}"></span>
+            </h2></strong>
+            <h3>
+                <span th:text="${question.description}"></span>
+            </h3>
+            <span class="text-desc" style="font-size:17px">
+                作者： <span th:text="${question.user.name}"></span>
+                |浏览数： <span th:text="${question.viewCount}"></span>
+                |发布时间： <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                |最新修改时间： <span th:text="${#dates.format(question.gmtModified,'yyyy-MM-dd HH:mm')}"></span>
+            </span>
+            <hr>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h3>
+                    <li th:if="${session.user !=null}">
+                        <a th:href="@{'/publish/'+${question.id}}">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true" th:text="' 编辑'" th:if="${question.user.id == session.user.id}"></span>
+                        </a>
+                    </li>
+                </h3>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h2>问题发起人<br></h2>
+            <h3>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded general" th:src="${question.user.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <strong>
+                            <h3 class="media-heading">
+                                <span th:text="${question.user.name}"></span>
+                            </h3>
+                        </strong>
+                    </div>
+                </div>
+            </h3>
+        </div>
+    </div>
+</div>
+
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
