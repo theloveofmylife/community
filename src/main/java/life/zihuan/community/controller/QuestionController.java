@@ -1,7 +1,6 @@
 package life.zihuan.community.controller;
 
 import life.zihuan.community.dto.QuestionDTO;
-import life.zihuan.community.mapper.QuestionMapper;
 import life.zihuan.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

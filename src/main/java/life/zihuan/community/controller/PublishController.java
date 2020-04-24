@@ -1,8 +1,6 @@
 package life.zihuan.community.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import life.zihuan.community.dto.QuestionDTO;
-import life.zihuan.community.mapper.QuestionMapper;
 import life.zihuan.community.model.Question;
 import life.zihuan.community.model.User;
 import life.zihuan.community.service.QuestionService;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
-    @Autowired
-    QuestionMapper questionMapper;
     @Autowired
     QuestionService questionService;
     @GetMapping("/publish")

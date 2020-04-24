@@ -6,7 +6,7 @@
 <generatorConfiguration>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
-        //JDBC连接
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <jdbcConnection driverClass="org.h2.Driver"
                         connectionURL="jdbc:h2:~/community"
                         userId="sa"
@@ -17,22 +17,24 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="life.zihuan.community.model" targetProject="\java\main\src">
+        <javaModelGenerator targetPackage="life.zihuan.community.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="life.zihuan.community.mapper"  targetProject="\java\main\src">
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="life.zihuan.community.dao"  targetProject="\java\main\src">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="life.zihuan.community.dao"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
         <table tableName="USER" domainObjectName="User" >
-
+        </table>
+        <table tableName="QUESTION" domainObjectName="Question" >
         </table>
 
     </context>
 </generatorConfiguration>
+

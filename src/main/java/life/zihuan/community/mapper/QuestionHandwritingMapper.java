@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface QuestionMapper {
+public interface QuestionHandwritingMapper {
     @Insert("insert into QUESTION (title,\n" +
             "\tdescription,\n" +
             "\tgmt_create,\n" +

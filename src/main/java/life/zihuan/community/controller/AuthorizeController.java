@@ -2,7 +2,6 @@ package life.zihuan.community.controller;
 
 import life.zihuan.community.dto.AccessTokenDTO;
 import life.zihuan.community.dto.GithubUser;
-import life.zihuan.community.mapper.UserMapper;
 import life.zihuan.community.model.User;
 import life.zihuan.community.provider.GithubProvider;
 import life.zihuan.community.service.UserService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -27,8 +25,6 @@ public class AuthorizeController {
     private String clientSecret;
     @Value("${github.client.uri}")
     private String clientUri;
-    @Autowired
-    private UserMapper userMapper;
     @Autowired
     private UserService userService;
     @GetMapping("/callback")
