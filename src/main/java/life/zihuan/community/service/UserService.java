@@ -1,7 +1,7 @@
 package life.zihuan.community.service;
 
-import life.zihuan.community.dto.GithubUser;
 import life.zihuan.community.dao.UserMapper;
+import life.zihuan.community.dto.GithubUser;
 import life.zihuan.community.model.User;
 import life.zihuan.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;

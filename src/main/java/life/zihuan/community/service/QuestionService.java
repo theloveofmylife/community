@@ -1,9 +1,12 @@
 package life.zihuan.community.service;
 
+import life.zihuan.community.dao.QuestionExtMapper;
 import life.zihuan.community.dto.PaginationDTO;
 import life.zihuan.community.dto.QuestionDTO;
 import life.zihuan.community.dao.UserMapper;
 import life.zihuan.community.dao.QuestionMapper;
+import life.zihuan.community.exception.CustomizeErrorCode;
+import life.zihuan.community.exception.CustomizeException;
 import life.zihuan.community.model.Question;
 import life.zihuan.community.model.QuestionExample;
 import life.zihuan.community.model.User;
@@ -19,8 +22,12 @@ import java.util.List;
 public class QuestionService {
     @Autowired
     QuestionMapper questionMapper;
+
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    QuestionExtMapper questionExtMapper;
     public PaginationDTO list(int page, int size) {
         int offset = size * (page - 1);
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
@@ -71,6 +78,9 @@ public class QuestionService {
 
     public QuestionDTO getById(int id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.questionNotFound());
+        }
         //Question question = questionMapper.getById(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -93,8 +103,19 @@ public class QuestionService {
             updateQuestion.setTag(question.getTag());
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion,questionExample);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion,questionExample);
+            if (updated != 1){
+                throw new CustomizeException(CustomizeErrorCode.questionNotFound());
+            }
             //questionMapper.update(question);
         }
+    }
+
+    public void incView(int id) {
+        Question record = new Question();
+        record.setId(id);
+        record.setViewCount(1);
+        questionExtMapper.incView(record);
+
     }
 }
