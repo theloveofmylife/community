@@ -32,7 +32,11 @@
 
         <table tableName="USER" domainObjectName="User" >
         </table>
+
         <table tableName="QUESTION" domainObjectName="Question" >
+        </table>
+
+        <table tableName="COMMENT" domainObjectName="Comment" >
         </table>
 
     </context>

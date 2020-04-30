@@ -13,7 +13,7 @@
         <result column="TAG" jdbcType="VARCHAR" property="tag" />
     </resultMap>
 
-    <update id="incView" parameterType="life.zihuan.community.model.Question">
+    <update id="incViewCount" parameterType="life.zihuan.community.model.Question">
     update QUESTION
     set VIEW_COUNT = VIEW_COUNT + #{viewCount,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}

@@ -10,9 +10,11 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- 必需的 Jquery 文件 -->
-    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/community.js"></script>
 
     <link rel="stylesheet" href="/css/community.css"/>
+
+    <script src="/jquery/jquery.min.js"></script>
 </head>
 <body style="background-color: #efefef">
 <div th:insert="~{navigation::nav}"></div>
@@ -20,6 +22,7 @@
 <div class="container-fluid main" style="background-color: white">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <strong><h2>
                 <span class="glyphicon glyphicon-book" aria-hidden="true" th:text="'  ' + ${question.title}"></span>
             </h2></strong>
@@ -41,6 +44,72 @@
                         </a>
                     </li>
                 </h3>
+            </div>
+            </div>
+<!--回复-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>
+                    <span th:text="${question.commentCount} + '个回复'">
+                    </span>
+                    <br>
+                </h3>
+                <hr>
+                <h4>
+                    <div class="media comments" th:each="comment : ${comments}" th:if="${comments != null}">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded commentPictureGeneral" th:src="${comment.user.avatarUrl}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <strong>
+                                <h4 class="media-heading">
+                                    <span th:text="${comment.user.name}"></span>
+                                </h4>
+                            </strong>
+                        </div>
+                        <br>
+                        <div>
+                            <span th:text="${comment.content}" style="font-size:19px"></span>
+                        </div>
+                        <br>
+                        <div>
+                        <span class="text-desc" style="font-size:18px">
+                            发布于 <span th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        </span>
+                        </div>
+                        <br>
+                        <div class="menu">
+                                <span class="glyphicon glyphicon-thumbs-up icon"></span>  赞 同&nbsp;&nbsp;
+                                <span class="glyphicon glyphicon-comment icon"></span>  评 论
+                        </div>
+                    </div>
+                </h4>
+
+            </div>
+<!--            回复输入框-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>提交回复<br></h3>
+                <hr>
+                <h4>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded general" th:src="${question.user.avatarUrl}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <strong>
+                                <h3 class="media-heading">
+                                    <span th:text="${question.user.name}"></span>
+                                </h3>
+                            </strong>
+                        </div>
+                    </div>
+                </h4>
+                <input type="hidden" id="question_id" th:value="${question.id}">
+                <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
+                <button type="submit" class="btn btn-success btn-lg" onclick="post()" style="float: right;margin-bottom: 15px">回复</button>
             </div>
 
         </div>

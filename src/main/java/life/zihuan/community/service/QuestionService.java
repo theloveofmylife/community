@@ -28,6 +28,7 @@ public class QuestionService {
 
     @Autowired
     QuestionExtMapper questionExtMapper;
+
     public PaginationDTO list(int page, int size) {
         int offset = size * (page - 1);
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
@@ -50,7 +51,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO list(int id, int page, int size) {
+    public PaginationDTO list(long id, int page, int size) {
         int offset = size * (page - 1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(id);
@@ -76,10 +77,10 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getById(int id) {
+    public QuestionDTO getById(long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null){
-            throw new CustomizeException(CustomizeErrorCode.questionNotFound());
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         //Question question = questionMapper.getById(id);
         QuestionDTO questionDTO = new QuestionDTO();
@@ -91,8 +92,12 @@ public class QuestionService {
 
     public void createOrUpdate(Question question) {
         if (question.getId()==0){
+            question.setId(null);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
             //questionMapper.create(question);
         }else{
@@ -105,17 +110,17 @@ public class QuestionService {
             questionExample.createCriteria().andIdEqualTo(question.getId());
             int updated = questionMapper.updateByExampleSelective(updateQuestion,questionExample);
             if (updated != 1){
-                throw new CustomizeException(CustomizeErrorCode.questionNotFound());
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             //questionMapper.update(question);
         }
     }
 
-    public void incView(int id) {
+    public void incViewCount(long id) {
         Question record = new Question();
         record.setId(id);
         record.setViewCount(1);
-        questionExtMapper.incView(record);
+        questionExtMapper.incViewCount(record);
 
     }
 }

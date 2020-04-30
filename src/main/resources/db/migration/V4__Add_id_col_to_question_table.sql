@@ -1,5 +1,5 @@
 alter table QUESTION
-	add id int auto_increment;
+	add id bigint auto_increment;
 
 alter table QUESTION
 	add constraint QUESTION_pk

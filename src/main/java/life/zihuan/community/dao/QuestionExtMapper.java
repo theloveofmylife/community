@@ -6,7 +6,7 @@ import java.util.*;
 
 public interface QuestionExtMapper {
 
-    void incView(Question question);
+    void incViewCount(Question question);
 
     void incCommentCount(Question question);
 

@@ -18,3 +18,27 @@
     height: 26px;
     width: 26px;
 }
+.comments {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.comment{
+    margin: 10px 0;
+}
+.commentPictureGeneral{
+    height: 30px;
+    width: 30px;
+}
+.menu{
+    color: #2b669a;
+}
+.menu .icon {
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}

@@ -3,23 +3,23 @@ package life.zihuan.community.dto;
 import life.zihuan.community.model.User;
 
 public class QuestionDTO {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private Long gmtCreate;
     private Long gmtModified;
-    private int creator;
+    private Long creator;
     private String tag;
-    private int viewCount;
-    private int commentCount;
-    private int likeCount;
+    private Integer viewCount;
+    private Integer commentCount;
+    private Integer likeCount;
     private User user;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,11 +55,11 @@ public class QuestionDTO {
         this.gmtModified = gmtModified;
     }
 
-    public int getCreator() {
+    public Long getCreator() {
         return creator;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(Long creator) {
         this.creator = creator;
     }
 
@@ -71,27 +71,27 @@ public class QuestionDTO {
         this.tag = tag;
     }
 
-    public int getViewCount() {
+    public Integer getViewCount() {
         return viewCount;
     }
 
-    public void setViewCount(int viewCount) {
+    public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
     }
 
-    public int getCommentCount() {
+    public Integer getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(int commentCount) {
+    public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
 
-    public int getLikeCount() {
+    public Integer getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
     }
 

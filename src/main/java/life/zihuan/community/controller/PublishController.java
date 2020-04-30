@@ -24,7 +24,7 @@ public class PublishController {
     }
     @PostMapping("/publish")
     public String doPublish(
-            @RequestParam(value = "id",required = false,defaultValue = "0") int id,
+            @RequestParam(value = "id",required = false,defaultValue = "0") long id,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("tag") String tag,
