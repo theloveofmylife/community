@@ -2,7 +2,9 @@ package life.zihuan.community.controller;
 
 import life.zihuan.community.dao.CommentMapper;
 import life.zihuan.community.dto.CommentCreateDTO;
+import life.zihuan.community.dto.CommentDTO;
 import life.zihuan.community.dto.ResultDTO;
+import life.zihuan.community.enums.CommentTypeEnum;
 import life.zihuan.community.exception.CustomizeErrorCode;
 import life.zihuan.community.model.Comment;
 import life.zihuan.community.model.User;
@@ -10,12 +12,10 @@ import life.zihuan.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -43,6 +43,13 @@ public class CommentController {
         comment.setCommentator(1L);
         comment.setLikeCount(0L);
         commentService.insert(comment);
-        return ResultDTO.okof();
+        return ResultDTO.okOf();
+    }
+
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultDTO comments(@PathVariable(name = "id") Long id){
+        List<CommentDTO> commentDTOList = commentService.listByParentIdAndType(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOList);
     }
 }

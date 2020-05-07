@@ -1,9 +1,6 @@
 package life.zihuan.community.service;
 
-import life.zihuan.community.dao.CommentMapper;
-import life.zihuan.community.dao.QuestionExtMapper;
-import life.zihuan.community.dao.QuestionMapper;
-import life.zihuan.community.dao.UserMapper;
+import life.zihuan.community.dao.*;
 import life.zihuan.community.dto.CommentDTO;
 import life.zihuan.community.enums.CommentTypeEnum;
 import life.zihuan.community.exception.CustomizeErrorCode;
@@ -27,6 +24,8 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentExtMapper commentExtMapper;
     @Transactional
     public void insert(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0){
@@ -42,21 +41,27 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //增加评论数
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         }else {
             //回复问题
             Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getParentId());
             if (dbQuestion == null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             dbQuestion.setCommentCount(1);
             questionExtMapper.incCommentCount(dbQuestion);
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Long id) {
+    public List<CommentDTO> listByParentIdAndType(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
-        commentExample.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+        commentExample.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(type.getType());
         commentExample.setOrderByClause("gmt_create desc");
         List<Comment> commentList = commentMapper.selectByExample(commentExample);
         if (commentList.size() == 0){

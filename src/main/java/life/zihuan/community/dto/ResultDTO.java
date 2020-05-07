@@ -3,15 +3,34 @@ package life.zihuan.community.dto;
 import life.zihuan.community.exception.CustomizeErrorCode;
 import life.zihuan.community.exception.CustomizeException;
 
-public class ResultDTO {
+import java.util.List;
+
+public class ResultDTO<T> {
     private int code;
     private String message;
+    private T data;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     public ResultDTO(CustomizeErrorCode customizeErrorCode) {
         this.code = customizeErrorCode.getCode();
         this.message = customizeErrorCode.getMessage();
     }
-    public static ResultDTO okof(){
+    public static <T> ResultDTO okOf(T t){
+        ResultDTO resultDTO = new ResultDTO<T>();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("成功");
+        resultDTO.setData(t);
+        return resultDTO;
+    }
+
+    public static ResultDTO okOf(){
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
         resultDTO.setMessage("成功");
