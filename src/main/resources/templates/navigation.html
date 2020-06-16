@@ -29,6 +29,7 @@
                     <li th:if="${session.user !=null}">
                         <a href="/publish">发布问题</a>
                     </li>
+                    <li><a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}">42</span></a></li>
                     <a th:if="${session.user !=null}" class="navbar-brand" href="#">
                         <img class="img-rounded navigation" th:src="${session.user.avatarUrl}">
                     </a>

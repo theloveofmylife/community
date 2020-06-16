@@ -32,7 +32,7 @@
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;&nbsp;推&nbsp;&nbsp;荐
                 <hr>
             </h2>
-            <div class="media" th:each="question : ${paginationDTO.questionDTOList}" th:if="${paginationDTO.questionDTOList != null}">
+            <div class="media" th:each="question : ${paginationDTO.data}" th:if="${paginationDTO.data != null}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded general" th:src="${question.user.avatarUrl}">

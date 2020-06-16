@@ -3,8 +3,8 @@ package life.zihuan.community.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaginationDTO {
-    private List<QuestionDTO> questionDTOList;
+public class PaginationDTO<T> {
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -12,6 +12,14 @@ public class PaginationDTO {
     private int page;
     private List<Integer> pages = new ArrayList<Integer>();
     private int totalPage;
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
 
     public int getTotalPage() {
         return totalPage;
@@ -21,13 +29,6 @@ public class PaginationDTO {
         this.totalPage = totalPage;
     }
 
-    public List<QuestionDTO> getQuestionDTOList() {
-        return questionDTOList;
-    }
-
-    public void setQuestionDTOList(List<QuestionDTO> questionDTOList) {
-        this.questionDTOList = questionDTOList;
-    }
 
     public boolean isShowPrevious() {
         return showPrevious;

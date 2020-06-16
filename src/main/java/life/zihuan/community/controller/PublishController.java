@@ -1,9 +1,11 @@
 package life.zihuan.community.controller;
 
+import life.zihuan.community.cache.TagCache;
 import life.zihuan.community.dto.QuestionDTO;
 import life.zihuan.community.model.Question;
 import life.zihuan.community.model.User;
 import life.zihuan.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,8 @@ public class PublishController {
     @Autowired
     QuestionService questionService;
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("tags",TagCache.get());
         return "publish";
     }
     @PostMapping("/publish")
@@ -35,6 +38,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
+        model.addAttribute("tags",TagCache.get());
         if (title == null || title == ""){
             model.addAttribute("error", "问题标题不能为空");
             return "publish";
@@ -47,7 +51,11 @@ public class PublishController {
             model.addAttribute("error", "问题标签不能为空");
             return "publish";
         }
-
+        String invalid = TagCache.filterInvalid(tag);
+        if (StringUtils.isNoneBlank(invalid)){
+            model.addAttribute("error", "存在非法标签"+invalid);
+            return "publish";
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null){
             model.addAttribute("error","用户未登录");
@@ -70,6 +78,7 @@ public class PublishController {
         model.addAttribute("description",questionDTO.getDescription());
         model.addAttribute("tag",questionDTO.getTag());
         model.addAttribute("id",questionDTO.getId());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 }

@@ -26,7 +26,7 @@
   </update>
 
     <select id="selectRelated" parameterType="life.zihuan.community.model.Question" resultMap="BaseResultMap">
-    select * from QUESTION where id != #{id} and tag regexp #{tag}
+    select * from QUESTION where id != #{id} and tag regexp #{tag} limit 10
   </select>
 
 </mapper>

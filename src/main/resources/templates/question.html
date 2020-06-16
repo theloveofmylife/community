@@ -24,30 +24,38 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <strong><h2>
-                <span class="glyphicon glyphicon-book" aria-hidden="true" th:text="'  ' + ${question.title}"></span>
-            </h2></strong>
-            <h3>
-                <span th:text="${question.description}"></span>
-            </h3>
-            <span class="text-desc" style="font-size:17px">
-                作者： <span th:text="${question.user.name}"></span>
-                |浏览数： <span th:text="${question.viewCount}"></span>
-                |发布时间： <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
-                |最新修改时间： <span th:text="${#dates.format(question.gmtModified,'yyyy-MM-dd HH:mm')}"></span>
-            </span>
-            <hr>
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <strong>
+                    <h2>
+                        <span class="glyphicon glyphicon-book" aria-hidden="true" th:text="'  ' + ${question.title}"></span>
+                    </h2>
+                </strong>
                 <h3>
-                    <li th:if="${session.user !=null}">
-                        <a th:href="@{'/publish/'+${question.id}}">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true" th:text="' 编辑'" th:if="${question.user.id == session.user.id}"></span>
-                        </a>
-                    </li>
+                    <span th:text="${question.description}"></span>
                 </h3>
+                <span class="text-desc" style="font-size:17px">
+                    作者： <span th:text="${question.user.name}"></span>
+                    |浏览数： <span th:text="${question.viewCount}"></span>
+                    |发布时间： <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    |最新修改时间： <span th:text="${#dates.format(question.gmtModified,'yyyy-MM-dd HH:mm')}"></span>
+                </span>
+                <!--标签-->
+                <hr>
+                <span th:each="tag : ${question.tag.split(',')}">
+                    <span class="label label-info glyphicon glyphicon-tag question-tag" style="font-size:17px" th:text="' '+${tag}"></span>
+                </span>
+                <hr>
+                <!--问题编辑-->
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <h3>
+                        <li th:if="${session.user !=null}" style="list-style: none">
+                            <a th:href="@{'/publish/'+${question.id}}">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true" th:text="' 编辑'" th:if="${question.user.id == session.user.id}"></span>
+                            </a>
+                        </li>
+                    </h3>
+                </div>
             </div>
-            </div>
-<!--回复-->
+            <!--回复-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h3>
                     <span th:text="${question.commentCount} + '个回复'">
@@ -126,6 +134,7 @@
             </div>
 
         </div>
+        <!--右边信息块-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h2>问题发起人<br></h2>
             <h3>
@@ -143,6 +152,20 @@
                         </strong>
                     </div>
                 </div>
+            </h3>
+            <!--微信号-->
+            <hr>
+            <h2>本人微信<br></h2>
+            <img src="/img/weiChat.jpg" class="img-thumbnail question-weChat">
+            <!--相关问题-->
+            <hr>
+            <h2>相关问题<br></h2>
+            <h3>
+                <ul class="question-rated">
+                    <li th:each="related:${relatedQuestions}">
+                        <a th:href="@{'/question/'+${related.id}}" th:text= "${related.title}"></a>
+                    </li>
+                </ul>
             </h3>
         </div>
     </div>
