@@ -16,6 +16,13 @@
     <link rel="stylesheet" href="/css/community.css"/>
 
     <script src="/jquery/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <link rel="stylesheet" href="/css/editormd.preview.min.css">
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/js/moment.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 </head>
 <body style="background-color: #efefef">
 <div th:insert="~{navigation::nav}"></div>
@@ -29,9 +36,15 @@
                         <span class="glyphicon glyphicon-book" aria-hidden="true" th:text="'  ' + ${question.title}"></span>
                     </h2>
                 </strong>
-                <h3>
-                    <span th:text="${question.description}"></span>
-                </h3>
+                <!--内容-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                    <textarea style="display:none;" th:text="${question.description}"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
                 <span class="text-desc" style="font-size:17px">
                     作者： <span th:text="${question.user.name}"></span>
                     |浏览数： <span th:text="${question.viewCount}"></span>
@@ -116,13 +129,14 @@
                     <div class="media">
                         <div class="media-left">
                             <a href="#">
-                                <img class="media-object img-rounded general" th:src="${question.user.avatarUrl}">
+                                <img class="media-object img-rounded"
+                                     th:src="${session.user != null ? session.user.avatarUrl : '/img/defaultUserAvatar.png'}">
                             </a>
                         </div>
                         <div class="media-body">
                             <strong>
                                 <h3 class="media-heading">
-                                    <span th:text="${question.user.name}"></span>
+                                    <span th:text="${session.user != null ? session.user.name : '匿名用户'}"></span>
                                 </h3>
                             </strong>
                         </div>
@@ -147,7 +161,7 @@
                     <div class="media-body">
                         <strong>
                             <h3 class="media-heading">
-                                <span th:text="${question.user.name}"></span>
+                                <span th:text="${session.user != null ? session.user.name : '匿名用户'}"></span>
                             </h3>
                         </strong>
                     </div>
