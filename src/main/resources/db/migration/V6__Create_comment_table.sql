@@ -10,13 +10,3 @@ create table comment
 	constraint comment_pk
 		primary key (id)
 );
-
-comment on column comment.parent_id is '父类id';
-
-comment on column comment.type is '父类类型';
-
-comment on column comment.commentator is '评论人id';
-
-comment on column comment.gmt_create is '创建时间';
-
-comment on column comment.like_count is '点赞数';
