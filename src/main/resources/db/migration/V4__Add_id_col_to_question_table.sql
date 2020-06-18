@@ -1,6 +1,6 @@
-alter table QUESTION
+alter table question
 	add id bigint auto_increment;
 
-alter table QUESTION
-	add constraint QUESTION_pk
+alter table question
+	add constraint question_pk
 		primary key (id);
