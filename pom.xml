@@ -133,9 +133,6 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.3.3</version>
-                spring.datasource.url=jdbc:mysql://rm-bp146gj3u858pb7theo.mysql.rds.aliyuncs.com:3306/community
-                spring.datasource.username=jingpeng
-                spring.datasource.password=741852963+jjpp+
                 <configuration>
                     <url>jdbc:mysql://rm-bp146gj3u858pb7theo.mysql.rds.aliyuncs.com:3306/community</url>
                     <user>jingpeng</user>
